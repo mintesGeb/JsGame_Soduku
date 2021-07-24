@@ -1,0 +1,10 @@
+.cube {
+  width: 40px;
+  height: 40px;
+  margin: 7px;
+}
+#soduku-grid {
+  position: absolute;
+  left: 350px;
+  top: 150px;
+}

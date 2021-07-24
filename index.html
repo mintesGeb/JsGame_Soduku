@@ -8,10 +8,11 @@
   </head>
   <body>
     <h1>Mintes Soduku</h1>
+    <hr />
     <div id="initial-msg">Click to Begin</div>
     <div id="start-game">
       <div id="timer">00:00</div>
-      <div id="soduku-grid"></div>
+
       <div id="info">
         <label for="Wrongs">Mistake</label>
         <input
@@ -21,11 +22,13 @@
           value="0"
           disabled="true"
         />
+        <span style="color: red; font-size: 1.5rem">/10</span>
       </div>
       <button id="hint">Hint</button>
       <span id="remaining-hint">3</span>
       <div id="hint-msg">No more hints 😢</div>
       <div id="gameover-msg">Game Over</div>
+      <div id="soduku-grid"></div>
     </div>
   </body>
 </html>

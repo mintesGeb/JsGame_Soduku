@@ -55,3 +55,12 @@ h1 {
   position: relative;
   bottom: 20px;
 }
+#Wrongs {
+  font-size: 1.5rem;
+  margin: 5px;
+  color: red;
+}
+#start-game {
+  position: relative;
+  /* margin-top: 5px; */
+}

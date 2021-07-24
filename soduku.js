@@ -197,7 +197,7 @@ function valueCheck(element) {
     if (inputValidation(e.key, ref)) {
       element.style.color = "green";
     } else {
-      if (wrong >= 1) {
+      if (wrong >= 9) {
         wrong++;
         element.style.color = "red";
         document.getElementById("Wrongs").value = wrong;
@@ -263,14 +263,14 @@ console.log(mytry);
 console.log(testAnswer(mytry));
 
 function countdown(display) {
-  let min = 1;
-  let sec = 21;
+  let min = 30;
+  let sec = 01;
   let timer = setInterval(() => {
     // console.log(`${min}:${sec--}`);
     display.innerHTML = `${min}:${sec--}`;
     if (min != 0 && sec <= 0) {
       min--;
-      sec = 20;
+      sec = 60;
     } else if (min <= 0 && sec <= 0) {
       // console.log(`${min}:${sec--}`);
       display.innerHTML = `${min}:${sec--}`;

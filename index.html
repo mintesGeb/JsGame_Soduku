@@ -7,18 +7,25 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>My Soduku</h1>
-
-    <div id="soduku-grid"></div>
-    <div id="info">
-      <label for="Wrongs">Mistake</label>
-      <input
-        style="width: 20px; height: 20px"
-        type="text"
-        id="Wrongs"
-        value="0"
-        disabled="true"
-      />
+    <h1>Mintes Soduku</h1>
+    <div id="initial-msg">Click to Begin</div>
+    <div id="start-game">
+      <div id="timer">00:00</div>
+      <div id="soduku-grid"></div>
+      <div id="info">
+        <label for="Wrongs">Mistake</label>
+        <input
+          style="width: 20px; height: 20px"
+          type="text"
+          id="Wrongs"
+          value="0"
+          disabled="true"
+        />
+      </div>
+      <button id="hint">Hint</button>
+      <span id="remaining-hint">3</span>
+      <div id="hint-msg">No more hints 😢</div>
+      <div id="gameover-msg">Game Over</div>
     </div>
   </body>
 </html>

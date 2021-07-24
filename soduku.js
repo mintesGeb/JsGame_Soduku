@@ -126,6 +126,25 @@ console.log(testAnswer(myWrongAns));
 //   [3, 4, 5, 2, 8, 6, 1, 7, 9],
 // ];
 
+let sodukuGrid = document.getElementById("soduku-grid");
+let wrong = 0;
+let hint = 0;
+let timer = document.getElementById("timer");
+let gameStatus = true;
+
+window.onload = () => {
+  document.querySelector("#start-game").style.opacity = "20%";
+  window.onclick = () => {
+    document.querySelector("#start-game").style.opacity = "100%";
+    document.querySelector("#initial-msg").style.display = "none";
+
+    countdown(timer);
+  };
+  document.getElementById("gameover-msg").style.display = "none";
+  document.getElementById("hint-msg").style.display = "none";
+  creategrid(myArray, sodukuGrid);
+};
+
 function creategrid(arr, loc) {
   arr.forEach((miniArr) => {
     miniArr.forEach((number) => {
@@ -154,48 +173,77 @@ function creategrid(arr, loc) {
     }
   });
 }
-// function creategrid(arr, loc) {
-//   arr.forEach((miniArr) => {
-//     miniArr.forEach((number) => {
-//       let span = document.createElement("span");
-//       span.innerHTML = `${number}\t`;
-//       span.style.fontSize = "1.75rem";
-//       loc.appendChild(span);
-//     });
-//     let p = document.createElement("p");
-//     p.innerHTML = "\n";
-//     loc.appendChild(p);
-//   });
-// }
-let sodukuGrid = document.getElementById("soduku-grid");
-creategrid(myArray, sodukuGrid);
 
 function valueCheck(element) {
-  let wrong = 0;
-  let ref = element.value;
+  let ref;
+
   element.addEventListener("click", () => {
+    ref = element.value;
     console.log(ref);
-    element.value = "";
+
+    document.getElementById("hint").onclick = () => {
+      if (hint < 3) {
+        giveHint(element, ref);
+      } else {
+        document.getElementById("hint-msg").style.display = "block";
+        console.log("too much hint ");
+      }
+    };
   });
 
   element.addEventListener("keydown", (e) => {
+    element.value = "";
     console.log(e.key);
-    myList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    console.log();
-    if (myList.includes(parseInt(e.key))) {
-      if (e.key != ref) {
+    if (inputValidation(e.key, ref)) {
+      element.style.color = "green";
+    } else {
+      if (wrong >= 1) {
         wrong++;
-        setTimeout(() => {
-          element.style.color = "red";
-          document.getElementById("Wrongs").value = wrong;
-        }, 100);
+        element.style.color = "red";
+        document.getElementById("Wrongs").value = wrong;
+        gameover(sodukuGrid);
       } else {
-        element.style.color = "green";
+        wrong++;
+        element.style.color = "red";
+        document.getElementById("Wrongs").value = wrong;
       }
     }
   });
 }
 
+function inputValidation(userInput, reference) {
+  if (userInput != reference) {
+    return false;
+  }
+  return true;
+}
+
+function gameover(loc) {
+  gamestatus = false;
+  loc.childNodes.forEach((element) => {
+    if (element.value && element.style.color !== "red") {
+      if (element.style.color !== "orange" && element.style.color !== "green") {
+        element.style.color = "blue";
+      }
+      element.disabled = true;
+    }
+    document.getElementById("gameover-msg").style.display = "block";
+  });
+  console.log(timer.innerHTML);
+  let p = document.createElement("p");
+  p.innerHTML = `Time: ${timer.innerHTML}`;
+  p.style.color = "black";
+  timer.style.display = "none";
+  document.getElementById("gameover-msg").appendChild(p);
+}
+function giveHint(element, reference) {
+  let remainingHint = document.getElementById("remaining-hint");
+  hint++;
+  remainingHint.innerHTML = Number(remainingHint.innerHTML) - 1;
+  element.value = reference;
+  element.style.color = "orange";
+  element.disabled = true;
+}
 function checkAnswer(loc) {
   let mainArray = [];
   let temp = [];
@@ -213,3 +261,24 @@ let mytry = checkAnswer(sodukuGrid);
 console.log(mytry);
 
 console.log(testAnswer(mytry));
+
+function countdown(display) {
+  let min = 1;
+  let sec = 21;
+  let timer = setInterval(() => {
+    // console.log(`${min}:${sec--}`);
+    display.innerHTML = `${min}:${sec--}`;
+    if (min != 0 && sec <= 0) {
+      min--;
+      sec = 20;
+    } else if (min <= 0 && sec <= 0) {
+      // console.log(`${min}:${sec--}`);
+      display.innerHTML = `${min}:${sec--}`;
+      clearInterval(timer);
+      if (gamestatus) {
+        gameover(sodukuGrid);
+      }
+    }
+  }, 1000);
+}
+// countdown();

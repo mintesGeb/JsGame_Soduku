@@ -1,3 +1,11 @@
+body {
+  padding-left: 40px;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+h1 {
+  font-family: Helvetica, sans-serif, Impact, Haettenschweiler,
+    "Arial Narrow Bold", sans-serif;
+}
 .cube {
   width: 40px;
   height: 40px;
@@ -7,4 +15,43 @@
   position: absolute;
   left: 350px;
   top: 150px;
+}
+#gameover-msg {
+  color: red;
+  font-size: 2.5rem;
+  position: relative;
+  left: 100px;
+  top: 200px;
+  margin-bottom: 50px;
+}
+#hint {
+  width: 80px;
+  height: 50px;
+  margin: 20px 0 0;
+}
+#hint-msg {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 1.75rem;
+  margin-top: 10px;
+}
+#timer {
+  position: absolute;
+  left: 550px;
+  top: 60px;
+  font-size: 3rem;
+}
+#initial-msg {
+  font-family: Helvetica, sans-serif, Impact, Haettenschweiler;
+  color: brown;
+
+  position: absolute;
+  left: 520px;
+  top: 115px;
+  font-size: 2rem;
+}
+#remaining-hint {
+  font-size: 1.5rem;
+  color: orange;
+  position: relative;
+  bottom: 20px;
 }

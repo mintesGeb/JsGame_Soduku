@@ -24,6 +24,23 @@ h1 {
   top: 200px;
   margin-bottom: 50px;
 }
+#congratulation-msg {
+  color: green;
+  font-size: 2.5rem;
+  position: relative;
+  left: 70px;
+  top: 260px;
+  margin-bottom: 50px;
+}
+#incomplete-msg {
+  color: black;
+  font-size: 1.5rem;
+  position: relative;
+  left: 50px;
+  top: 260px;
+  margin-bottom: 50px;
+}
+
 #hint {
   width: 80px;
   height: 50px;
@@ -45,8 +62,8 @@ h1 {
   color: brown;
 
   position: absolute;
-  left: 520px;
-  top: 115px;
+  left: 150px;
+  top: 465px;
   font-size: 2rem;
 }
 #remaining-hint {
@@ -62,5 +79,48 @@ h1 {
 }
 #start-game {
   position: relative;
+  /* top: 100px; */
   /* margin-top: 5px; */
+}
+#start-btn {
+  font-size: 1.5rem;
+  color: brown;
+  height: 75px;
+  width: 75px;
+  border: brown 1px dotted;
+  border-radius: 50%;
+}
+#start-btn:hover {
+  background-color: brown;
+  font-size: 1rem;
+  color: white;
+  height: 80px;
+  width: 80px;
+  border: brown 2px dotted;
+  border-radius: 50%;
+}
+
+#submit {
+  position: absolute;
+  right: 150px;
+  top: 380px;
+  font-size: 1.2rem;
+  color: green;
+  height: 77px;
+  width: 77px;
+  border: green 1px dotted;
+  border-radius: 50%;
+}
+
+#submit:hover {
+  background-color: green;
+  position: absolute;
+  right: 150px;
+  top: 380px;
+  font-size: 1rem;
+  color: white;
+  height: 82px;
+  width: 82px;
+  /* border: brown 3px solid; */
+  border-radius: 50%;
 }

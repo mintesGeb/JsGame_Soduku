@@ -106,9 +106,9 @@ function testAnswer(arr) {
   }
   return "Try again!";
 }
-console.log(testAnswer(myArray));
-console.log("-----------");
-console.log(testAnswer(myWrongAns));
+// console.log(testAnswer(myArray));
+// console.log("-----------");
+// console.log(testAnswer(myWrongAns));
 
 // module.exports = {
 //   testAnswer: testAnswer,
@@ -134,15 +134,30 @@ let gameStatus = true;
 
 window.onload = () => {
   document.querySelector("#start-game").style.opacity = "20%";
-  window.onclick = () => {
+  document.getElementById("start-btn").onclick = () => {
     document.querySelector("#start-game").style.opacity = "100%";
     document.querySelector("#initial-msg").style.display = "none";
 
     countdown(timer);
   };
+  document.getElementById("incomplete-msg").style.display = "none";
+  document.getElementById("congratulation-msg").style.display = "none";
   document.getElementById("gameover-msg").style.display = "none";
   document.getElementById("hint-msg").style.display = "none";
   creategrid(myArray, sodukuGrid);
+  document.getElementById("submit").onclick = () => {
+    console.log("done");
+    const userAnswer = checkAnswer(sodukuGrid);
+    if (userAnswer.whites === 0) {
+      console.log(testAnswer(userAnswer.mainArray));
+      document.getElementById("congratulation-msg").style.display = "block";
+    } else {
+      console.log("you have " + userAnswer.whites + " incomplete boxes");
+      document.getElementById("incomplete-msg").style.display = "block";
+      document.getElementById("incomplete-msg").innerHTML =
+        "You have " + userAnswer.whites + " incomplete boxes.";
+    }
+  };
 };
 
 function creategrid(arr, loc) {
@@ -160,7 +175,7 @@ function creategrid(arr, loc) {
     loc.appendChild(p);
   });
   // console.log(loc.childNodes);
-  for (let i = 0; i < loc.childNodes.length / 1.5; i++) {
+  for (let i = 0; i < loc.childNodes.length * 2; i++) {
     let random = Math.floor(Math.random() * loc.childNodes.length);
 
     loc.childNodes[random].disabled = true;
@@ -179,21 +194,18 @@ function valueCheck(element) {
 
   element.addEventListener("click", () => {
     ref = element.value;
-    console.log(ref);
 
     document.getElementById("hint").onclick = () => {
       if (hint < 3) {
         giveHint(element, ref);
       } else {
         document.getElementById("hint-msg").style.display = "block";
-        console.log("too much hint ");
       }
     };
   });
 
   element.addEventListener("keydown", (e) => {
     element.value = "";
-    console.log(e.key);
     if (inputValidation(e.key, ref)) {
       element.style.color = "green";
     } else {
@@ -229,7 +241,6 @@ function gameover(loc) {
     }
     document.getElementById("gameover-msg").style.display = "block";
   });
-  console.log(timer.innerHTML);
   let p = document.createElement("p");
   p.innerHTML = `Time: ${timer.innerHTML}`;
   p.style.color = "black";
@@ -247,7 +258,11 @@ function giveHint(element, reference) {
 function checkAnswer(loc) {
   let mainArray = [];
   let temp = [];
+  let whites = 0;
   loc.childNodes.forEach((element) => {
+    if (element.style.color === "white") {
+      whites++;
+    }
     if (element.value) {
       temp.push(Number(element.value));
     } else {
@@ -255,11 +270,13 @@ function checkAnswer(loc) {
       temp = [];
     }
   });
-  return mainArray;
+  console.log(whites);
+  console.log(mainArray);
+  return { whites, mainArray };
 }
 let mytry = checkAnswer(sodukuGrid);
-console.log(mytry);
 
+console.log(mytry);
 console.log(testAnswer(mytry));
 
 function countdown(display) {
@@ -281,4 +298,3 @@ function countdown(display) {
     }
   }, 1000);
 }
-// countdown();

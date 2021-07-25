@@ -156,6 +156,10 @@ window.onload = () => {
       document.getElementById("incomplete-msg").style.display = "block";
       document.getElementById("incomplete-msg").innerHTML =
         "You have " + userAnswer.whites + " incomplete boxes.";
+      setTimeout(() => {
+        document.getElementById("incomplete-msg").style.display = "none";
+        document.getElementById("incomplete-msg").innerHTML = "";
+      }, 2000);
     }
   };
 };

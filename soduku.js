@@ -179,7 +179,7 @@ function creategrid(arr, loc) {
     loc.appendChild(p);
   });
   // console.log(loc.childNodes);
-  for (let i = 0; i < loc.childNodes.length * 2; i++) {
+  for (let i = 0; i < loc.childNodes.length / 1; i++) {
     let random = Math.floor(Math.random() * loc.childNodes.length);
 
     loc.childNodes[random].disabled = true;

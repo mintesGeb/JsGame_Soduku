@@ -275,7 +275,6 @@ function valueCheck(element) {
 
   element.addEventListener("click", () => {
     ref = element.getAttribute("class").split(" ")[0];
-    console.log(ref);
 
     document.getElementById("hint").onclick = () => {
       if (hint < 3) {

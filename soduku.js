@@ -131,45 +131,113 @@ let wrong = 0;
 let hint = 0;
 let timer = document.getElementById("timer");
 let gameStatus = true;
+let outOf = 0;
+let percentage;
+let difficulty = false;
 
 window.onload = () => {
-  document.querySelector("#start-game").style.opacity = "20%";
-  document.getElementById("start-btn").onclick = () => {
-    document.querySelector("#start-game").style.opacity = "100%";
-    document.querySelector("#initial-msg").style.display = "none";
+  document.getElementById("play-again").style.display = "none";
+  document.querySelector("#start-game").style.display = "none";
+  document.getElementById("difficulty-msg").style.display = "none";
+  document.getElementById("back").style.display = "none";
 
-    countdown(timer);
+  document.getElementById("easy").onclick = () => {
+    document.getElementById("easy").style.opacity = "100%";
+    document.getElementById("medium").style.opacity = "20%";
+    document.getElementById("hard").style.opacity = "20%";
+    difficulty = "easy";
   };
+  document.getElementById("medium").onclick = () => {
+    document.getElementById("medium").style.opacity = "100%";
+    document.getElementById("easy").style.opacity = "20%";
+    document.getElementById("hard").style.opacity = "20%";
+    difficulty = "medium";
+  };
+  document.getElementById("hard").onclick = () => {
+    document.getElementById("hard").style.opacity = "100%";
+    document.getElementById("medium").style.opacity = "20%";
+    document.getElementById("easy").style.opacity = "20%";
+    difficulty = "hard";
+  };
+
+  document.getElementById("start-btn").onclick = () => {
+    if (!difficulty) {
+      document.getElementById("difficulty-msg").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("difficulty-msg").style.display = "none";
+      }, 2000);
+    } else {
+      document.getElementById("difficulty").style.display = "none";
+      document.querySelector("#start-game").style.display = "block";
+      document.querySelector("#initial-msg").style.display = "none";
+
+      countdown(timer, difficulty);
+      creategrid(myArray, sodukuGrid, difficulty);
+    }
+  };
+
   document.getElementById("incomplete-msg").style.display = "none";
   document.getElementById("congratulation-msg").style.display = "none";
   document.getElementById("gameover-msg").style.display = "none";
   document.getElementById("hint-msg").style.display = "none";
-  creategrid(myArray, sodukuGrid);
+
   document.getElementById("submit").onclick = () => {
     console.log("done");
     const userAnswer = checkAnswer(sodukuGrid);
+    console.log(userAnswer);
     if (userAnswer.whites === 0) {
-      console.log(testAnswer(userAnswer.mainArray));
-      document.getElementById("congratulation-msg").style.display = "block";
+      if (userAnswer.reds) {
+        incompleteMsg(
+          "You have " + userAnswer.reds + " wrong answers. Please Correct them"
+        );
+      } else {
+        document.getElementById("submit").style.display = "none";
+        document.getElementById("hint").disabled = true;
+        document.getElementById("play-again").style.display = "block";
+
+        console.log(testAnswer(userAnswer.mainArray));
+        document.getElementById("congratulation-msg").style.display = "block";
+        percentage = calcPercentage(userAnswer);
+        console.log(percentage);
+        timeFreeze(document.getElementById("congratulation-msg"));
+
+        let percentageP = document.createElement("p");
+        percentageP.innerHTML = `Score: ${percentage}`;
+        percentageP.style.color = "black";
+        document.getElementById("congratulation-msg").appendChild(percentageP);
+
+        document.getElementById("play-again").onclick = () => {
+          location.reload();
+        };
+      }
     } else {
-      console.log("you have " + userAnswer.whites + " incomplete boxes");
-      document.getElementById("incomplete-msg").style.display = "block";
-      document.getElementById("incomplete-msg").innerHTML =
-        "You have " + userAnswer.whites + " incomplete boxes.";
-      setTimeout(() => {
-        document.getElementById("incomplete-msg").style.display = "none";
-        document.getElementById("incomplete-msg").innerHTML = "";
-      }, 2000);
+      incompleteMsg("You have " + userAnswer.whites + " incomplete boxes.");
     }
   };
 };
+function calcPercentage(ans) {
+  let wrongSqueeze = wrong * 10;
+  let hintValue = ans.oranges * 10;
+  return 100 - (wrongSqueeze + hintValue);
+}
 
-function creategrid(arr, loc) {
+function incompleteMsg(msg) {
+  document.getElementById("incomplete-msg").style.display = "block";
+  document.getElementById("incomplete-msg").innerHTML = `${msg}`;
+
+  setTimeout(() => {
+    document.getElementById("incomplete-msg").style.display = "none";
+    document.getElementById("incomplete-msg").innerHTML = "";
+  }, 3000);
+}
+
+function creategrid(arr, loc, difficultyLevel = "medium") {
+  console.log(difficultyLevel);
   arr.forEach((miniArr) => {
     miniArr.forEach((number) => {
       let input = document.createElement("input");
       input.value = `${number}`;
-      input.setAttribute("class", "cube");
+      input.setAttribute("class", `${number} cube`);
       input.style.fontSize = "1.75rem";
 
       loc.appendChild(input);
@@ -179,25 +247,35 @@ function creategrid(arr, loc) {
     loc.appendChild(p);
   });
   // console.log(loc.childNodes);
-  for (let i = 0; i < loc.childNodes.length / 1; i++) {
+  let difficultyFactor = 0;
+
+  if (difficultyLevel === "easy") difficultyFactor = 0.75;
+  else if (difficultyLevel === "medium") difficultyFactor = 1;
+  else if (difficultyLevel === "hard") difficultyFactor = 1.3;
+  else difficultyFactor = 1;
+
+  for (let i = 0; i < loc.childNodes.length / difficultyFactor; i++) {
     let random = Math.floor(Math.random() * loc.childNodes.length);
 
     loc.childNodes[random].disabled = true;
   }
   loc.childNodes.forEach((element) => {
     if (element.disabled === false) {
-      // element.value = "";
+      outOf++;
+      element.value = "-";
       element.style.color = "white";
       valueCheck(element);
     }
   });
+  console.log(outOf);
 }
 
 function valueCheck(element) {
   let ref;
 
   element.addEventListener("click", () => {
-    ref = element.value;
+    ref = element.getAttribute("class").split(" ")[0];
+    console.log(ref);
 
     document.getElementById("hint").onclick = () => {
       if (hint < 3) {
@@ -213,7 +291,7 @@ function valueCheck(element) {
     if (inputValidation(e.key, ref)) {
       element.style.color = "green";
     } else {
-      if (wrong >= 9) {
+      if (wrong >= 3) {
         wrong++;
         element.style.color = "red";
         document.getElementById("Wrongs").value = wrong;
@@ -245,12 +323,17 @@ function gameover(loc) {
     }
     document.getElementById("gameover-msg").style.display = "block";
   });
+  timeFreeze(document.getElementById("gameover-msg"));
+}
+
+function timeFreeze(displayDiv) {
   let p = document.createElement("p");
   p.innerHTML = `Time: ${timer.innerHTML}`;
   p.style.color = "black";
   timer.style.display = "none";
-  document.getElementById("gameover-msg").appendChild(p);
+  displayDiv.appendChild(p);
 }
+
 function giveHint(element, reference) {
   let remainingHint = document.getElementById("remaining-hint");
   hint++;
@@ -263,9 +346,17 @@ function checkAnswer(loc) {
   let mainArray = [];
   let temp = [];
   let whites = 0;
+  let oranges = 0;
+  let reds = 0;
   loc.childNodes.forEach((element) => {
     if (element.style.color === "white") {
       whites++;
+    }
+    if (element.style.color === "red") {
+      reds++;
+    }
+    if (element.style.color === "orange") {
+      oranges++;
     }
     if (element.value) {
       temp.push(Number(element.value));
@@ -274,17 +365,19 @@ function checkAnswer(loc) {
       temp = [];
     }
   });
-  console.log(whites);
-  console.log(mainArray);
-  return { whites, mainArray };
+  return { reds, whites, oranges, mainArray };
 }
 let mytry = checkAnswer(sodukuGrid);
 
 console.log(mytry);
 console.log(testAnswer(mytry));
 
-function countdown(display) {
-  let min = 30;
+function countdown(display, difficultyLevel = "medium") {
+  if (difficultyLevel === "easy") min = 5;
+  else if (difficultyLevel === "medium") min = 15;
+  else if (difficultyLevel === "hard") min = 25;
+  else min = 15;
+
   let sec = 01;
   let timer = setInterval(() => {
     // console.log(`${min}:${sec--}`);

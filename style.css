@@ -5,6 +5,7 @@ body {
 h1 {
   font-family: Helvetica, sans-serif, Impact, Haettenschweiler,
     "Arial Narrow Bold", sans-serif;
+  color: brown;
 }
 .cube {
   width: 40px;
@@ -13,7 +14,7 @@ h1 {
 }
 #soduku-grid {
   position: absolute;
-  left: 350px;
+  left: 20%;
   top: 150px;
 }
 #gameover-msg {
@@ -28,17 +29,42 @@ h1 {
   color: green;
   font-size: 2.5rem;
   position: relative;
-  left: 70px;
-  top: 260px;
+  left: 29%;
+  top: 200px;
   margin-bottom: 50px;
+  text-align: center;
 }
+#play-again {
+  position: relative;
+  left: 77%;
+  top: 200px;
+  font-size: 1.2rem;
+  color: green;
+  height: 77px;
+  width: 77px;
+  border: green 1px dotted;
+  border-radius: 50%;
+}
+
+#play-again:hover {
+  position: relative;
+  left: 77%;
+  top: 200px;
+  background-color: green;
+  font-size: 1rem;
+  color: white;
+  height: 82px;
+  width: 82px;
+  border-radius: 50%;
+}
+
 #incomplete-msg {
   color: black;
   font-size: 1.5rem;
-  position: relative;
-  left: 50px;
-  top: 260px;
-  margin-bottom: 50px;
+  position: absolute;
+  left: 30%;
+  top: 700px;
+  margin-right: 50px;
 }
 
 #hint {
@@ -53,7 +79,7 @@ h1 {
 }
 #timer {
   position: absolute;
-  left: 550px;
+  left: 40%;
   top: 60px;
   font-size: 3rem;
 }
@@ -102,7 +128,7 @@ h1 {
 
 #submit {
   position: absolute;
-  right: 150px;
+  right: 15%;
   top: 380px;
   font-size: 1.2rem;
   color: green;
@@ -113,14 +139,92 @@ h1 {
 }
 
 #submit:hover {
-  background-color: green;
   position: absolute;
-  right: 150px;
+  right: 15%;
   top: 380px;
+  background-color: green;
   font-size: 1rem;
   color: white;
   height: 82px;
   width: 82px;
-  /* border: brown 3px solid; */
+  border-radius: 50%;
+}
+
+#difficulty {
+  text-align: center;
+  padding: 50px;
+}
+.difficulty {
+  margin: 20px;
+  font-size: 1.2rem;
+  height: 85px;
+  width: 85px;
+  border-radius: 50%;
+}
+
+#easy {
+  color: #d79771;
+  border: #d79771 1px dotted;
+}
+#easy:hover {
+  margin: 20px;
+  background-color: #d79771;
+  font-size: 1rem;
+  font-weight: 900;
+  color: white;
+  height: 82px;
+  width: 82px;
+  border-radius: 50%;
+}
+#medium {
+  color: #b05b3b;
+  border: #b05b3b 1px dotted;
+}
+#medium:hover {
+  margin: 20px;
+  background-color: #b05b3b;
+  font-size: 1rem;
+  font-weight: 900;
+  color: white;
+  height: 82px;
+  width: 82px;
+  border-radius: 50%;
+}
+#hard {
+  color: #753422;
+  border: #753422 1px dotted;
+}
+#hard:hover {
+  margin: 20px;
+  background-color: #753422;
+  font-size: 1rem;
+  font-weight: 900;
+  color: white;
+  height: 82px;
+  width: 82px;
+  border-radius: 50%;
+}
+#difficulty-msg {
+  font-size: 1.5rem;
+}
+
+#back {
+  color: black;
+  border: black 1px dotted;
+  margin: 10px;
+  font-size: 1.2rem;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+#back:hover {
+  color: white;
+  background-color: black;
+  border: black 1px dotted;
+  margin: 10px;
+  font-size: 1.2rem;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
 }

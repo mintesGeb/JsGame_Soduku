@@ -312,7 +312,7 @@ function inputValidation(userInput, reference) {
 }
 
 function gameover(loc) {
-  gamestatus = false;
+  gameStatus = false;
   loc.childNodes.forEach((element) => {
     if (element.value && element.style.color !== "red") {
       if (element.style.color !== "orange" && element.style.color !== "green") {
@@ -388,7 +388,7 @@ function countdown(display, difficultyLevel = "medium") {
       // console.log(`${min}:${sec--}`);
       display.innerHTML = `${min}:${sec--}`;
       clearInterval(timer);
-      if (gamestatus) {
+      if (gameStatus) {
         gameover(sodukuGrid);
       }
     }

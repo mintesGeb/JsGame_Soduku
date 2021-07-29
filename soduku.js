@@ -232,7 +232,6 @@ function incompleteMsg(msg) {
 }
 
 function creategrid(arr, loc, difficultyLevel = "medium") {
-  console.log(difficultyLevel);
   arr.forEach((miniArr) => {
     miniArr.forEach((number) => {
       let input = document.createElement("input");
@@ -267,7 +266,6 @@ function creategrid(arr, loc, difficultyLevel = "medium") {
       valueCheck(element);
     }
   });
-  console.log(outOf);
 }
 
 function valueCheck(element) {
@@ -368,8 +366,8 @@ function checkAnswer(loc) {
 }
 let mytry = checkAnswer(sodukuGrid);
 
-console.log(mytry);
-console.log(testAnswer(mytry));
+// console.log(mytry);
+// console.log(testAnswer(mytry));
 
 function countdown(display, difficultyLevel = "medium") {
   if (difficultyLevel === "easy") min = 5;
